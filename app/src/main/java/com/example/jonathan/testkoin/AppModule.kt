@@ -11,36 +11,46 @@ import org.koin.dsl.module
 private const val TAG = "TK: AppModule"
 
 // A 1st Repository
-class MyRepository {
-    fun fetchData(): String {
-        Log.d(TAG, "MyRepository: fetchData")
+class FirstRepository {
+    fun fetchData(viewModelName: String): String {
+        Log.d(TAG, "FirstRepository: fetchData: viewModelName=[$viewModelName]")
 
-        return "Hello from Koin MyRepository!"
+        return "Hello from Koin FirstRepository and viewModelName=[$viewModelName]!"
+    }
+}
+
+// A 2nd Repository
+class SecondRepository {
+    fun fetchData(viewModelName: String): String {
+        Log.d(TAG, "SecondRepository: fetchData: viewModelName=[$viewModelName]")
+
+        return "Hello from Koin SecondRepository and viewModelName=[$viewModelName]!"
     }
 }
 
 // A 1st ViewModel
-class FirstViewModel(private val myRepository: MyRepository) : ViewModel() {
+class FirstViewModel(private val repository: FirstRepository) : ViewModel() {
     fun getData(): String {
         Log.d(TAG, "FirstViewModel: getData")
 
-        return myRepository.fetchData()
+        return repository.fetchData("FirstViewModel")
     }
 }
 
 // A 2nd ViewModel
-class SecondViewModel(private val myRepository: MyRepository) : ViewModel() {
+class SecondViewModel(private val repository: SecondRepository) : ViewModel() {
     fun getData(): String {
         Log.d(TAG, "SecondViewModel: getData")
 
-        return myRepository.fetchData()
+        return repository.fetchData("SecondViewModel")
     }
 }
 
 // Koin module to provide dependencies
 val appModule = module {
     // Declare a singleton for Repository
-    single { MyRepository() }
+    single { FirstRepository() }
+    single { SecondRepository() }
 
     // Declare an object or factory for ViewModel
     viewModel { FirstViewModel(get()) }
