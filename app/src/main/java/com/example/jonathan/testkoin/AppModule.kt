@@ -10,9 +10,14 @@ import org.koin.dsl.module
  */
 private const val TAG = "TK: AppModule"
 
+// Repository Interface
+interface Repository {
+    fun fetchData(viewModelName: String): String
+}
+
 // A 1st Repository
-class FirstRepository {
-    fun fetchData(viewModelName: String): String {
+class FirstRepository : Repository {
+    override fun fetchData(viewModelName: String): String {
         Log.d(TAG, "FirstRepository: fetchData: viewModelName=[$viewModelName]")
 
         return "Hello from Koin FirstRepository and viewModelName=[$viewModelName]!"
@@ -20,8 +25,8 @@ class FirstRepository {
 }
 
 // A 2nd Repository
-class SecondRepository {
-    fun fetchData(viewModelName: String): String {
+class SecondRepository : Repository {
+    override fun fetchData(viewModelName: String): String {
         Log.d(TAG, "SecondRepository: fetchData: viewModelName=[$viewModelName]")
 
         return "Hello from Koin SecondRepository and viewModelName=[$viewModelName]!"
