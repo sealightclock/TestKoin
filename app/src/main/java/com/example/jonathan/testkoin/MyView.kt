@@ -14,10 +14,10 @@ private const val TAG = "TK: MyView"
 fun MainScreen() {
     Log.d(TAG, "MainScreen")
 
-    // Inject ViewModel
+    // Inject ViewModel using Koin:
     val myViewModel: MyViewModel = koinViewModel()
 
-    // Use ViewModel's data
+    // Use ViewModel's data:
     val data = myViewModel.getData()
 
     Surface(

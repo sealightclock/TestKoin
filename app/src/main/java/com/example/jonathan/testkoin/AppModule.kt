@@ -5,28 +5,34 @@ import androidx.lifecycle.ViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
+/**
+ * This is the Koin module for the application.
+ */
 private const val TAG = "TK: AppModule"
 
-class Repository {
+// A 1st Repository
+class MyRepository {
     fun fetchData(): String {
-        Log.d(TAG, "Repository: fetchData")
+        Log.d(TAG, "MyRepository: fetchData")
 
-        return "Hello from Koin Repository!"
+        return "Hello from Koin MyRepository!"
     }
 }
 
-class MyViewModel(private val repository: Repository) : ViewModel() {
+// A 1st ViewModel
+class MyViewModel(private val myRepository: MyRepository) : ViewModel() {
     fun getData(): String {
         Log.d(TAG, "MyViewModel: getData")
 
-        return repository.fetchData()
+        return myRepository.fetchData()
     }
 }
 
+// Koin module to provide dependencies
 val appModule = module {
-    // Provide Repository
-    single { Repository() }
+    // Declare a singleton for Repository
+    single { MyRepository() }
 
-    // Provide ViewModel
+    // Declare an object or factory for ViewModel
     viewModel { MyViewModel(get()) }
 }

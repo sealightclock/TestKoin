@@ -14,6 +14,9 @@ class MyApplication : Application() {
 
         // Start Koin
         startKoin {
+            Log.v(TAG, "onCreate: startKoin")
+
+            // Add your modules here
             modules(appModule)
         }
     }
