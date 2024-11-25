@@ -1,5 +1,6 @@
 package com.example.jonathan.testkoin
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -7,8 +8,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 
+private const val TAG = "TK: MyView"
+
 @Composable
 fun MainScreen() {
+    Log.d(TAG, "MainScreen")
+
     // Inject ViewModel
     val myViewModel: MyViewModel = koinViewModel()
 
