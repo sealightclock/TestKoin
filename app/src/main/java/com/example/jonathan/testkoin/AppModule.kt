@@ -20,9 +20,18 @@ class MyRepository {
 }
 
 // A 1st ViewModel
-class MyViewModel(private val myRepository: MyRepository) : ViewModel() {
+class FirstViewModel(private val myRepository: MyRepository) : ViewModel() {
     fun getData(): String {
-        Log.d(TAG, "MyViewModel: getData")
+        Log.d(TAG, "FirstViewModel: getData")
+
+        return myRepository.fetchData()
+    }
+}
+
+// A 2nd ViewModel
+class SecondViewModel(private val myRepository: MyRepository) : ViewModel() {
+    fun getData(): String {
+        Log.d(TAG, "SecondViewModel: getData")
 
         return myRepository.fetchData()
     }
@@ -34,5 +43,6 @@ val appModule = module {
     single { MyRepository() }
 
     // Declare an object or factory for ViewModel
-    viewModel { MyViewModel(get()) }
+    viewModel { FirstViewModel(get()) }
+    viewModel { SecondViewModel(get()) }
 }
