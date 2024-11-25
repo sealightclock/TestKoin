@@ -1,6 +1,8 @@
 package com.example.jonathan.testkoin
 
 import android.util.Log
+import androidx.lifecycle.ViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 private const val TAG = "TK: AppModule"
@@ -13,15 +15,14 @@ class Repository {
     }
 }
 
-class MyViewModel(private val repository: Repository) {
-    fun getData(): String {
-        Log.d(TAG, "MyViewModel: getData")
-
-        return repository.fetchData()
-    }
+class MyViewModel(private val repository: Repository) : ViewModel() {
+    fun getData(): String = repository.fetchData()
 }
 
 val appModule = module {
+    // Provide Repository
     single { Repository() }
-    factory { MyViewModel(get()) }
+
+    // Provide ViewModel
+    viewModel { MyViewModel(get()) }
 }

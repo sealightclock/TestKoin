@@ -15,10 +15,7 @@ fun MainScreen() {
     Log.d(TAG, "MainScreen")
 
     // Inject ViewModel
-    //val myViewModel: MyViewModel = koinViewModel()
-    val myViewModel = MyViewModel(
-        repository = Repository()
-    )
+    val myViewModel: MyViewModel = koinViewModel()
 
     // Use ViewModel's data
     val data = myViewModel.getData()
