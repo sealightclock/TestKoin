@@ -16,7 +16,11 @@ class Repository {
 }
 
 class MyViewModel(private val repository: Repository) : ViewModel() {
-    fun getData(): String = repository.fetchData()
+    fun getData(): String {
+        Log.d(TAG, "MyViewModel: getData")
+
+        return repository.fetchData()
+    }
 }
 
 val appModule = module {
