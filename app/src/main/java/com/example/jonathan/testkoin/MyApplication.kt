@@ -17,7 +17,7 @@ class MyApplication : Application() {
             Log.v(TAG, "onCreate: startKoin")
 
             // Add your modules here
-            modules(appModule)
+            modules(listOf(repositoryModule, viewModelModule))
         }
     }
 }

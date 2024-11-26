@@ -3,6 +3,7 @@ package com.example.jonathan.testkoin
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 /**
@@ -34,7 +35,7 @@ class SecondRepository : Repository {
 }
 
 // A 1st ViewModel
-class FirstViewModel(private val repository: FirstRepository) : ViewModel() {
+class FirstViewModel(private val repository: Repository) : ViewModel() {
     fun getData(): String {
         Log.d(TAG, "FirstViewModel: getData")
 
@@ -43,7 +44,7 @@ class FirstViewModel(private val repository: FirstRepository) : ViewModel() {
 }
 
 // A 2nd ViewModel
-class SecondViewModel(private val repository: SecondRepository) : ViewModel() {
+class SecondViewModel(private val repository: Repository) : ViewModel() {
     fun getData(): String {
         Log.d(TAG, "SecondViewModel: getData")
 
@@ -51,13 +52,20 @@ class SecondViewModel(private val repository: SecondRepository) : ViewModel() {
     }
 }
 
-// Koin module to provide dependencies
-val appModule = module {
-    // Declare a singleton for Repository
-    single { FirstRepository() }
-    single { SecondRepository() }
+// Koin Module for Repositories
+val repositoryModule = module {
+    Log.d(TAG, "repositoryModule")
 
-    // Declare an object or factory for ViewModel
-    viewModel { FirstViewModel(get()) }
-    viewModel { SecondViewModel(get()) }
+    // Declare a singleton for each Repository
+    single<Repository>(named("FirstRepository")) { FirstRepository() }
+    single<Repository>(named("SecondRepository")) { SecondRepository() }
+}
+
+// Koin Module for ViewModels
+val viewModelModule = module {
+    Log.d(TAG, "viewModelModule")
+
+    // TODO: Find a better way to match ViewModels with Repositories:
+    viewModel(named("FirstViewModel")) { FirstViewModel(get(named("SecondRepository"))) }
+    viewModel(named("SecondViewModel")) { SecondViewModel(get(named("FirstRepository"))) }
 }

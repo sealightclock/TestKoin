@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
+import org.koin.core.qualifier.named
 
 private const val TAG = "TK: MyView"
 
@@ -22,8 +23,8 @@ fun MainScreen() {
     var useFirstViewModel by remember { mutableStateOf(true) }
 
     // Dynamically inject the appropriate ViewModel
-    val firstViewModel: FirstViewModel = koinViewModel()
-    val secondViewModel: SecondViewModel = koinViewModel()
+    val firstViewModel: FirstViewModel = koinViewModel(named("FirstViewModel"))
+    val secondViewModel: SecondViewModel = koinViewModel(named("SecondViewModel"))
 
     // Use ViewModel data:
     val data = if (useFirstViewModel) {
